@@ -1,68 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>ARIA — AI Assistant</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
-
-<!-- Firebase -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey:            "AIzaSyAvQ2Io0VeVMciG3sdHg-FbCyVPn6QKSJI",
-  authDomain:        "ariaai-96048.firebaseapp.com",
-  projectId:         "ariaai-96048",
-  storageBucket:     "ariaai-96048.firebasestorage.app",
-  messagingSenderId: "60793873957",
-  appId:             "1:60793873957:web:f3dd24cad115a278b1c1cc"
-};
-
-const app  = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db   = getFirestore(app);
-const gp   = new GoogleAuthProvider();
-
-window.$fb = { auth, db, gp, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, signInWithPopup, doc, getDoc, setDoc, serverTimestamp };
-</script>
-
+ 
 <style>
-/* ═══════════════════════════════════════════
-   VARIABLES  — Grok-style monochrome dark
-═══════════════════════════════════════════ */
 :root{
   --bg:#0a0a0a;--bg1:#111;--bg2:#161616;--bg3:#1c1c1c;--bg4:#222;
-  --b1:#1f1f1f;--b2:#2a2a2a;--b3:#333;--b4:#444;
+  --b1:#1f1f1f;--b2:#2a2a2a;--b3:#333;
   --t1:#f4f4f5;--t2:#a1a1aa;--t3:#71717a;--t4:#3f3f46;
-  --gold:#e4c76b;--gold2:#8a7535;--red:#f87171;--green:#4ade80;--blue:#60a5fa;
+  --gold:#e4c76b;--red:#f87171;--green:#4ade80;--blue:#60a5fa;
   --r:8px;--rl:14px;--rxl:20px;
-  --font:'DM Sans',system-ui,sans-serif;
-  --mono:'DM Mono',monospace;
-  --sw:260px;--th:52px;
-  --shadow:0 12px 48px rgba(0,0,0,.6);
-  --ease:.18s cubic-bezier(.4,0,.2,1);
+  --font:'DM Sans',system-ui,sans-serif;--mono:'DM Mono',monospace;
+  --sw:260px;--th:52px;--shadow:0 12px 48px rgba(0,0,0,.6);--ease:.18s cubic-bezier(.4,0,.2,1);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
 body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased}
 button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}
 input,textarea,select{font-family:var(--font)}
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--b3);border-radius:99px}
-.page{display:none!important}
-.page.active{display:flex!important}
-
-/* ═══ KEYFRAMES ═══ */
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--b3);border-radius:99px}
+.page{display:none!important}.page.active{display:flex!important}
+ 
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -70,251 +37,113 @@ input,textarea,select{font-family:var(--font)}
 @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes overlayIn{from{opacity:0}to{opacity:1}}
 @keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes dotBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+@keyframes dotB{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
 @keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(244,244,245,.1)}50%{box-shadow:0 0 0 6px rgba(244,244,245,0)}}
-
-/* ═══════════════════════════════════════════
-   AUTH PAGE
-═══════════════════════════════════════════ */
-#auth-page{
-  min-height:100vh;align-items:center;justify-content:center;
-  padding:24px;background:var(--bg);flex-direction:column;position:relative;overflow:hidden;
-}
-#auth-page::before{
-  content:'';position:absolute;inset:0;
-  background-image:linear-gradient(var(--b1) 1px,transparent 1px),linear-gradient(90deg,var(--b1) 1px,transparent 1px);
-  background-size:52px 52px;
-  mask-image:radial-gradient(ellipse 72% 72% at 50% 50%,black 20%,transparent 100%);
-  opacity:.7;pointer-events:none;
-}
-#auth-page::after{
-  content:'';position:absolute;width:500px;height:500px;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  background:radial-gradient(circle,rgba(255,255,255,.03) 0%,transparent 70%);
-  pointer-events:none;
-}
-.auth-card{
-  position:relative;z-index:1;width:100%;max-width:380px;
-  background:var(--bg1);border:1px solid var(--b2);border-radius:var(--rxl);
-  padding:40px 36px 34px;box-shadow:var(--shadow);
-  animation:fadeUp .45s cubic-bezier(.4,0,.2,1) both;
-}
+ 
+/* AUTH */
+#auth-page{min-height:100vh;align-items:center;justify-content:center;padding:24px;background:var(--bg);flex-direction:column;position:relative;overflow:hidden}
+#auth-page::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--b1) 1px,transparent 1px),linear-gradient(90deg,var(--b1) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 72% 72% at 50% 50%,black 20%,transparent 100%);opacity:.7;pointer-events:none}
+.auth-card{position:relative;z-index:1;width:100%;max-width:380px;background:var(--bg1);border:1px solid var(--b2);border-radius:var(--rxl);padding:40px 36px 34px;box-shadow:var(--shadow);animation:fadeUp .4s ease both}
 .auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:28px}
-.auth-logo-icon{
-  width:32px;height:32px;background:var(--t1);border-radius:7px;
-  display:grid;place-items:center;flex-shrink:0;
-}
+.auth-logo-icon{width:32px;height:32px;background:var(--t1);border-radius:7px;display:grid;place-items:center;flex-shrink:0}
 .auth-logo-icon svg{width:18px;height:18px;color:var(--bg)}
 .auth-logo-name{font-size:18px;font-weight:600;letter-spacing:-.4px}
 .auth-h{font-size:21px;font-weight:600;letter-spacing:-.5px;margin-bottom:5px}
 .auth-sub{font-size:13.5px;color:var(--t2);margin-bottom:24px;line-height:1.5}
-.auth-err{
-  display:none;background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2);
-  color:var(--red);border-radius:var(--r);padding:9px 12px;font-size:13px;margin-bottom:12px;line-height:1.4;
-}
+.auth-err{display:none;background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2);color:var(--red);border-radius:var(--r);padding:9px 12px;font-size:13px;margin-bottom:12px;line-height:1.4}
 .field{margin-bottom:12px}
 .field label{display:block;font-size:12.5px;font-weight:500;color:var(--t2);margin-bottom:5px}
-.field input{
-  display:block;width:100%;padding:10px 13px;
-  background:var(--bg2);border:1px solid var(--b2);border-radius:var(--r);
-  color:var(--t1);font-size:14px;transition:border-color var(--ease);
-}
-.field input:focus{border-color:var(--b3);outline:none}
+.field input{display:block;width:100%;padding:10px 13px;background:var(--bg2);border:1px solid var(--b2);border-radius:var(--r);color:var(--t1);font-size:14px;transition:border-color var(--ease);outline:none}
+.field input:focus{border-color:var(--b3)}
 .field input::placeholder{color:var(--t4)}
-.btn-p{
-  width:100%;padding:11px;background:var(--t1);color:var(--bg);
-  font-size:14px;font-weight:600;border-radius:var(--r);margin-top:6px;
-  display:flex;align-items:center;justify-content:center;gap:7px;
-  transition:opacity var(--ease),transform .1s;
-}
-.btn-p:hover{opacity:.88}
-.btn-p:active{transform:scale(.99)}
-.btn-p:disabled{opacity:.35;cursor:default}
+.btn-p{width:100%;padding:11px;background:var(--t1);color:var(--bg);font-size:14px;font-weight:600;border-radius:var(--r);margin-top:6px;display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity var(--ease),transform .1s}
+.btn-p:hover{opacity:.88}.btn-p:active{transform:scale(.99)}.btn-p:disabled{opacity:.35;cursor:default}
 .or-div{display:flex;align-items:center;gap:12px;margin:16px 0;font-size:12px;color:var(--t3)}
 .or-div::before,.or-div::after{content:'';flex:1;height:1px;background:var(--b2)}
-.btn-google{
-  width:100%;padding:10px;background:var(--bg2);border:1px solid var(--b2);
-  border-radius:var(--r);font-size:13.5px;font-weight:500;color:var(--t2);
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:background var(--ease),color var(--ease),border-color var(--ease);
-}
+.btn-google{width:100%;padding:10px;background:var(--bg2);border:1px solid var(--b2);border-radius:var(--r);font-size:13.5px;font-weight:500;color:var(--t2);display:flex;align-items:center;justify-content:center;gap:8px;transition:all var(--ease)}
 .btn-google:hover{background:var(--bg3);color:var(--t1);border-color:var(--b3)}
-.btn-google svg{width:17px;height:17px;flex-shrink:0}
 .auth-sw{text-align:center;margin-top:16px;font-size:13px;color:var(--t3)}
 .auth-sw button{color:var(--t1);font-size:13px;font-weight:500;text-decoration:underline;text-underline-offset:2px}
 .spin{width:15px;height:15px;border:2px solid rgba(0,0,0,.2);border-top-color:#000;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
-
-/* ═══════════════════════════════════════════
-   APP SHELL
-═══════════════════════════════════════════ */
+.spin-w{width:15px;height:15px;border:2px solid rgba(255,255,255,.2);border-top-color:var(--t1);border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
+ 
+/* APP */
 #app-page{width:100vw;height:100vh;overflow:hidden;flex-direction:row}
-
-/* ─── SIDEBAR ─── */
-.sidebar{
-  width:var(--sw);height:100vh;background:var(--bg1);border-right:1px solid var(--b1);
-  display:flex;flex-direction:column;flex-shrink:0;transition:width var(--ease);overflow:hidden;
-}
+ 
+/* SIDEBAR */
+.sidebar{width:var(--sw);height:100vh;background:var(--bg1);border-right:1px solid var(--b1);display:flex;flex-direction:column;flex-shrink:0;transition:width var(--ease);overflow:hidden}
 .sidebar.collapsed{width:0;border:none}
-.sb-top{
-  height:var(--th);display:flex;align-items:center;justify-content:space-between;
-  padding:0 12px;border-bottom:1px solid var(--b1);flex-shrink:0;
-}
+.sb-top{height:var(--th);display:flex;align-items:center;justify-content:space-between;padding:0 12px;border-bottom:1px solid var(--b1);flex-shrink:0}
 .sb-logo{display:flex;align-items:center;gap:8px}
 .sb-logo-icon{width:26px;height:26px;background:var(--t1);border-radius:6px;display:grid;place-items:center;flex-shrink:0}
 .sb-logo-icon svg{width:14px;height:14px;color:var(--bg)}
 .sb-logo-name{font-size:15px;font-weight:600;letter-spacing:-.3px;white-space:nowrap}
-.icon-btn{
-  width:30px;height:30px;border-radius:6px;display:grid;place-items:center;
-  color:var(--t3);transition:background var(--ease),color var(--ease);flex-shrink:0;
-}
+.icon-btn{width:30px;height:30px;border-radius:6px;display:grid;place-items:center;color:var(--t3);transition:background var(--ease),color var(--ease);flex-shrink:0}
 .icon-btn:hover{background:var(--bg3);color:var(--t1)}
 .icon-btn svg{width:16px;height:16px}
-.new-btn{
-  margin:10px 10px 6px;padding:8px 12px;
-  background:var(--bg2);border:1px solid var(--b2);border-radius:var(--r);
-  font-size:13px;font-weight:500;color:var(--t2);
-  display:flex;align-items:center;gap:7px;cursor:pointer;flex-shrink:0;
-  transition:all var(--ease);
-}
+.new-btn{margin:10px 10px 6px;padding:8px 12px;background:var(--bg2);border:1px solid var(--b2);border-radius:var(--r);font-size:13px;font-weight:500;color:var(--t2);display:flex;align-items:center;gap:7px;cursor:pointer;flex-shrink:0;transition:all var(--ease)}
 .new-btn:hover{background:var(--bg3);color:var(--t1);border-color:var(--b3)}
 .new-btn svg{width:14px;height:14px;flex-shrink:0}
 .hist-section{flex:1;overflow-y:auto;padding:4px 6px}
 .hist-label{font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--t3);text-transform:uppercase;padding:8px 8px 4px}
-.hist-item{
-  padding:8px 10px;border-radius:var(--r);font-size:13px;color:var(--t2);cursor:pointer;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  display:flex;align-items:center;gap:7px;
-  transition:background var(--ease),color var(--ease);
-}
-.hist-item:hover{background:var(--bg3);color:var(--t1)}
-.hist-item.active{background:var(--bg3);color:var(--t1)}
+.hist-item{padding:8px 10px;border-radius:var(--r);font-size:13px;color:var(--t2);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:7px;transition:background var(--ease),color var(--ease)}
+.hist-item:hover,.hist-item.active{background:var(--bg3);color:var(--t1)}
 .hist-item svg{width:12px;height:12px;flex-shrink:0;opacity:.5}
 .sb-bottom{border-top:1px solid var(--b1);padding:8px;flex-shrink:0;display:flex;flex-direction:column;gap:2px}
-.user-card{
-  display:flex;align-items:center;gap:9px;padding:8px 9px;
-  border-radius:var(--r);cursor:pointer;transition:background var(--ease);
-}
+.user-card{display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:var(--r);cursor:pointer;transition:background var(--ease)}
 .user-card:hover{background:var(--bg3)}
-.avatar{
-  width:28px;height:28px;background:var(--bg4);border-radius:50%;
-  display:grid;place-items:center;flex-shrink:0;
-  font-size:12px;font-weight:600;color:var(--t2);overflow:hidden;
-}
+.avatar{width:28px;height:28px;background:var(--bg4);border-radius:50%;display:grid;place-items:center;flex-shrink:0;font-size:12px;font-weight:600;color:var(--t2)}
 .user-info{flex:1;min-width:0}
 .user-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.user-plan{font-size:11.5px;color:var(--t3)}
-.user-plan.gold{color:var(--gold)}
-.sb-btn{
-  display:flex;align-items:center;gap:8px;padding:8px 10px;
-  border-radius:var(--r);font-size:13px;color:var(--t3);cursor:pointer;
-  transition:background var(--ease),color var(--ease);
-}
+.user-plan{font-size:11.5px;color:var(--t3)}.user-plan.gold{color:var(--gold)}
+.sb-btn{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r);font-size:13px;color:var(--t3);cursor:pointer;transition:background var(--ease),color var(--ease)}
 .sb-btn:hover{background:var(--bg3);color:var(--t2)}
 .sb-btn svg{width:14px;height:14px;flex-shrink:0}
-
-/* ─── MAIN ─── */
+ 
+/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;min-width:0}
-
-/* topbar */
-.topbar{
-  height:var(--th);display:flex;align-items:center;justify-content:space-between;
-  padding:0 14px;border-bottom:1px solid var(--b1);flex-shrink:0;
-  background:var(--bg);gap:10px;
-}
+.topbar{height:var(--th);display:flex;align-items:center;justify-content:space-between;padding:0 14px;border-bottom:1px solid var(--b1);flex-shrink:0;background:var(--bg);gap:10px}
 .tb-left{display:flex;align-items:center;gap:8px}
 .tb-right{display:flex;align-items:center;gap:7px}
-.model-pill{
-  display:flex;align-items:center;gap:6px;padding:5px 11px;
-  background:var(--bg2);border:1px solid var(--b2);border-radius:99px;
-  font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;
-  transition:all var(--ease);position:relative;
-}
+.model-pill{display:flex;align-items:center;gap:6px;padding:5px 11px;background:var(--bg2);border:1px solid var(--b2);border-radius:99px;font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;transition:all var(--ease);position:relative}
 .model-pill:hover{background:var(--bg3);border-color:var(--b3);color:var(--t1)}
 .model-pill svg{width:12px;height:12px}
 .model-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 5px var(--green)}
-.mdrop{
-  display:none;position:absolute;top:calc(100% + 7px);left:0;
-  background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rl);
-  padding:5px;min-width:220px;z-index:50;box-shadow:var(--shadow);
-  animation:fadeUp .15s ease both;
-}
+.mdrop{display:none;position:absolute;top:calc(100% + 7px);left:0;background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rl);padding:5px;min-width:220px;z-index:50;box-shadow:var(--shadow);animation:fadeUp .15s ease both}
 .mdrop.open{display:block}
-.mopt{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:8px 10px;border-radius:var(--r);cursor:pointer;font-size:13px;color:var(--t2);
-  transition:background var(--ease),color var(--ease);
-}
+.mopt{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:var(--r);cursor:pointer;font-size:13px;color:var(--t2);transition:background var(--ease),color var(--ease)}
 .mopt:hover{background:var(--bg3);color:var(--t1)}
-.mopt h4{font-size:13px;font-weight:500}
-.mopt p{font-size:11px;color:var(--t3);margin-top:1px}
-.mopt-lock{
-  font-size:10px;padding:2px 7px;border-radius:99px;font-weight:600;
-  background:rgba(228,199,107,.08);border:1px solid rgba(228,199,107,.18);color:var(--gold);
-  white-space:nowrap;
-}
-.tb-up{
-  display:flex;align-items:center;gap:5px;padding:5px 12px;
-  background:rgba(228,199,107,.07);border:1px solid rgba(228,199,107,.18);
-  border-radius:99px;font-size:12.5px;font-weight:600;color:var(--gold);cursor:pointer;
-  transition:all var(--ease);
-}
+.mopt h4{font-size:13px;font-weight:500}.mopt p{font-size:11px;color:var(--t3);margin-top:1px}
+.mopt-lock{font-size:10px;padding:2px 7px;border-radius:99px;font-weight:600;background:rgba(228,199,107,.08);border:1px solid rgba(228,199,107,.18);color:var(--gold);white-space:nowrap}
+.tb-up{display:flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(228,199,107,.07);border:1px solid rgba(228,199,107,.18);border-radius:99px;font-size:12.5px;font-weight:600;color:var(--gold);cursor:pointer;transition:all var(--ease)}
 .tb-up:hover{background:rgba(228,199,107,.13)}
 .tb-up svg{width:12px;height:12px}
-.tb-pm{
-  display:none;align-items:center;gap:5px;padding:5px 12px;
-  background:rgba(228,199,107,.07);border:1px solid rgba(228,199,107,.18);
-  border-radius:99px;font-size:12px;font-weight:600;color:var(--gold);
-}
+.tb-pm{display:none;align-items:center;gap:5px;padding:5px 12px;background:rgba(228,199,107,.07);border:1px solid rgba(228,199,107,.18);border-radius:99px;font-size:12px;font-weight:600;color:var(--gold)}
 .tb-pm svg{width:12px;height:12px}
-
-/* chat area */
+ 
+/* CHAT */
 .chat-wrap{flex:1;overflow-y:auto;display:flex;flex-direction:column;position:relative}
-
-/* welcome */
-.welcome{
-  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:32px 24px;animation:fadeIn .4s ease both;
-}
-.w-icon{
-  width:52px;height:52px;background:var(--bg2);border:1px solid var(--b2);
-  border-radius:14px;display:grid;place-items:center;margin-bottom:18px;
-}
+.welcome{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;animation:fadeIn .4s ease both}
+.w-icon{width:52px;height:52px;background:var(--bg2);border:1px solid var(--b2);border-radius:14px;display:grid;place-items:center;margin-bottom:18px}
 .w-icon svg{width:26px;height:26px;color:var(--t2)}
 .welcome h1{font-size:27px;font-weight:600;letter-spacing:-.6px;margin-bottom:7px;text-align:center}
 .welcome p{font-size:15px;color:var(--t3);text-align:center;max-width:360px;line-height:1.6}
 .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:26px;max-width:560px}
-.chip{
-  padding:8px 15px;background:var(--bg2);border:1px solid var(--b2);border-radius:99px;
-  font-size:13px;color:var(--t2);cursor:pointer;
-  display:flex;align-items:center;gap:6px;
-  transition:all var(--ease);
-}
+.chip{padding:8px 15px;background:var(--bg2);border:1px solid var(--b2);border-radius:99px;font-size:13px;color:var(--t2);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all var(--ease)}
 .chip:hover{background:var(--bg3);border-color:var(--b3);color:var(--t1)}
 .chip svg{width:12px;height:12px;opacity:.6}
-
-/* messages */
 .messages{flex:1;padding:20px 0;display:flex;flex-direction:column;gap:2px}
 .mrow{display:flex;padding:5px 20px;animation:msgIn .2s ease both}
-.mrow.user{justify-content:flex-end}
-.mrow.ai{justify-content:flex-start}
-.bub-user{
-  max-width:68%;background:var(--bg3);border:1px solid var(--b2);
-  border-radius:16px 16px 4px 16px;padding:10px 15px;
-  font-size:14.5px;line-height:1.65;
-}
+.mrow.user{justify-content:flex-end}.mrow.ai{justify-content:flex-start}
+.bub-user{max-width:68%;background:var(--bg3);border:1px solid var(--b2);border-radius:16px 16px 4px 16px;padding:10px 15px;font-size:14.5px;line-height:1.65}
 .bub-ai{max-width:80%;display:flex;gap:11px;align-items:flex-start}
-.ai-av{
-  width:27px;height:27px;border-radius:50%;background:var(--t1);
-  flex-shrink:0;margin-top:2px;display:grid;place-items:center;
-}
+.ai-av{width:27px;height:27px;border-radius:50%;background:var(--t1);flex-shrink:0;margin-top:2px;display:grid;place-items:center}
 .ai-av svg{width:15px;height:15px;color:var(--bg)}
 .ai-c{flex:1;min-width:0;font-size:14.5px;line-height:1.7;color:var(--t1)}
-.ai-c p{margin-bottom:9px}
-.ai-c p:last-child{margin-bottom:0}
+.ai-c p{margin-bottom:9px}.ai-c p:last-child{margin-bottom:0}
 .ai-c h1,.ai-c h2,.ai-c h3{font-weight:600;margin:12px 0 5px;letter-spacing:-.3px}
 .ai-c h1{font-size:19px}.ai-c h2{font-size:16px}.ai-c h3{font-size:14.5px}
-.ai-c ul,.ai-c ol{margin-left:18px;margin-bottom:9px}
-.ai-c li{margin-bottom:3px}
+.ai-c ul,.ai-c ol{margin-left:18px;margin-bottom:9px}.ai-c li{margin-bottom:3px}
 .ai-c pre{background:var(--bg2);border:1px solid var(--b2);border-radius:var(--r);padding:14px;overflow-x:auto;font-size:13px;font-family:var(--mono);margin:8px 0}
 .ai-c code:not(pre code){background:var(--bg3);border:1px solid var(--b2);padding:1px 5px;border-radius:4px;font-size:13px;font-family:var(--mono);color:var(--t2)}
 .ai-c blockquote{border-left:3px solid var(--b3);padding-left:13px;color:var(--t2);margin:7px 0}
@@ -322,158 +151,78 @@ input,textarea,select{font-family:var(--font)}
 .ai-c th,.ai-c td{padding:8px 12px;border:1px solid var(--b2);text-align:left}
 .ai-c th{background:var(--bg2);font-weight:600}
 .ai-c a{color:var(--blue);text-decoration:underline}
-.ai-c hr{border:none;border-top:1px solid var(--b2);margin:12px 0}
 .typing{display:flex;gap:5px;align-items:center;padding:4px 0}
-.typing span{width:6px;height:6px;border-radius:50%;background:var(--t3);animation:dotBounce 1.2s infinite ease-in-out}
-.typing span:nth-child(2){animation-delay:.15s}
-.typing span:nth-child(3){animation-delay:.3s}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--t3);animation:dotB 1.2s infinite ease-in-out}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
 .mactions{display:flex;gap:3px;margin-top:7px;opacity:0;transition:opacity var(--ease)}
 .mrow:hover .mactions{opacity:1}
 .mact{width:27px;height:27px;border-radius:6px;display:grid;place-items:center;color:var(--t3);transition:background var(--ease),color var(--ease)}
-.mact:hover{background:var(--bg3);color:var(--t1)}
-.mact svg{width:13px;height:13px}
-
-/* input area */
+.mact:hover{background:var(--bg3);color:var(--t1)}.mact svg{width:13px;height:13px}
+ 
+/* INPUT */
 .input-area{padding:10px 14px 12px;border-top:1px solid var(--b1);flex-shrink:0;background:var(--bg)}
-.key-banner{
-  max-width:740px;margin:0 auto 10px;
-  background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.18);
-  border-radius:var(--r);padding:9px 13px;
-  display:flex;align-items:center;gap:9px;font-size:13px;color:var(--blue);
-}
+.key-banner{max-width:740px;margin:0 auto 10px;background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.18);border-radius:var(--r);padding:9px 13px;display:flex;align-items:center;gap:9px;font-size:13px;color:var(--blue)}
 .key-banner svg{width:14px;height:14px;flex-shrink:0}
 .key-banner a{text-decoration:underline;cursor:pointer;font-weight:500}
 .key-banner.hidden{display:none}
-.input-wrap{
-  max-width:740px;margin:0 auto;background:var(--bg1);
-  border:1px solid var(--b2);border-radius:var(--rxl);
-  padding:6px 6px 6px 15px;
-  display:flex;align-items:flex-end;gap:7px;
-  transition:border-color var(--ease);
-  box-shadow:0 2px 18px rgba(0,0,0,.25);
-}
+.input-wrap{max-width:740px;margin:0 auto;background:var(--bg1);border:1px solid var(--b2);border-radius:var(--rxl);padding:6px 6px 6px 15px;display:flex;align-items:flex-end;gap:7px;transition:border-color var(--ease);box-shadow:0 2px 18px rgba(0,0,0,.25)}
 .input-wrap:focus-within{border-color:var(--b3)}
-.chat-in{
-  flex:1;background:none;border:none;outline:none;
-  color:var(--t1);font-size:14.5px;line-height:1.6;
-  resize:none;min-height:28px;max-height:180px;overflow-y:auto;padding:6px 0;
-}
+.chat-in{flex:1;background:none;border:none;outline:none;color:var(--t1);font-size:14.5px;line-height:1.6;resize:none;min-height:28px;max-height:180px;overflow-y:auto;padding:6px 0}
 .chat-in::placeholder{color:var(--t4)}
 .in-tools{display:flex;align-items:center;gap:3px;flex-shrink:0}
-.in-tool{
-  width:31px;height:31px;border-radius:6px;display:grid;place-items:center;
-  color:var(--t3);transition:background var(--ease),color var(--ease);
-}
-.in-tool:hover{background:var(--bg3);color:var(--t2)}
-.in-tool svg{width:15px;height:15px}
-.send-btn{
-  width:33px;height:33px;border-radius:8px;background:var(--t1);color:var(--bg);
-  display:grid;place-items:center;flex-shrink:0;
-  transition:opacity var(--ease),transform .1s;animation:glow 2.5s infinite;
-}
-.send-btn:hover{opacity:.85}
-.send-btn:active{transform:scale(.93)}
-.send-btn:disabled{opacity:.22;cursor:default;animation:none}
+.in-tool{width:31px;height:31px;border-radius:6px;display:grid;place-items:center;color:var(--t3);transition:background var(--ease),color var(--ease)}
+.in-tool:hover{background:var(--bg3);color:var(--t2)}.in-tool svg{width:15px;height:15px}
+.send-btn{width:33px;height:33px;border-radius:8px;background:var(--t1);color:var(--bg);display:grid;place-items:center;flex-shrink:0;transition:opacity var(--ease),transform .1s;animation:glow 2.5s infinite}
+.send-btn:hover{opacity:.85}.send-btn:active{transform:scale(.93)}.send-btn:disabled{opacity:.22;cursor:default;animation:none}
 .send-btn svg{width:15px;height:15px}
 .in-meta{max-width:740px;margin:6px auto 0;display:flex;align-items:center;justify-content:space-between;padding:0 3px}
 .in-hint{font-size:11.5px;color:var(--t3)}
 .in-model{font-size:11.5px;color:var(--t3);display:flex;align-items:center;gap:3px}
 .in-model svg{width:11px;height:11px}
-
-/* ═══════════════════════════════════════════
-   MODALS
-═══════════════════════════════════════════ */
-.overlay{
-  position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.72);
-  display:none;align-items:center;justify-content:center;padding:20px;
-  backdrop-filter:blur(8px);animation:overlayIn .2s ease both;
-}
-.overlay.open{display:flex}
-.modal{
-  background:var(--bg1);border:1px solid var(--b2);border-radius:var(--rxl);
-  padding:30px;width:100%;max-width:460px;
-  box-shadow:var(--shadow);animation:modalIn .25s cubic-bezier(.4,0,.2,1) both;
-}
+ 
+/* MODALS */
+.overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
+.overlay.open{display:flex;animation:overlayIn .2s ease both}
+.modal{background:var(--bg1);border:1px solid var(--b2);border-radius:var(--rxl);padding:30px;width:100%;max-width:460px;box-shadow:var(--shadow);animation:modalIn .25s cubic-bezier(.4,0,.2,1) both}
 .modal.wide{max-width:540px}
 .mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .mt{font-size:17px;font-weight:600;letter-spacing:-.4px}
-.mc{
-  width:30px;height:30px;border-radius:6px;display:grid;place-items:center;
-  color:var(--t3);transition:background var(--ease),color var(--ease);
-}
-.mc:hover{background:var(--bg3);color:var(--t1)}
-.mc svg{width:15px;height:15px}
-
-/* settings tabs */
+.mc{width:30px;height:30px;border-radius:6px;display:grid;place-items:center;color:var(--t3);transition:background var(--ease),color var(--ease)}
+.mc:hover{background:var(--bg3);color:var(--t1)}.mc svg{width:15px;height:15px}
 .stabs{display:flex;gap:2px;background:var(--bg2);border-radius:var(--r);padding:3px;margin-bottom:20px}
-.stab{
-  flex:1;padding:7px 10px;border-radius:6px;font-size:13px;font-weight:500;
-  color:var(--t3);cursor:pointer;text-align:center;transition:all var(--ease);
-}
+.stab{flex:1;padding:7px 10px;border-radius:6px;font-size:13px;font-weight:500;color:var(--t3);cursor:pointer;text-align:center;transition:all var(--ease)}
 .stab.active{background:var(--bg3);color:var(--t1)}
-.spanel{display:none}
-.spanel.active{display:block}
+.spanel{display:none}.spanel.active{display:block}
 .sg{margin-bottom:18px}
 .sg label{display:block;font-size:12.5px;font-weight:500;color:var(--t2);margin-bottom:6px}
-.sg input,.sg select,.sg textarea{
-  display:block;width:100%;padding:10px 13px;
-  background:var(--bg2);border:1px solid var(--b2);border-radius:var(--r);
-  color:var(--t1);font-size:13.5px;transition:border-color var(--ease);
-}
-.sg input:focus,.sg select:focus,.sg textarea:focus{border-color:var(--b3);outline:none}
+.sg input,.sg select,.sg textarea{display:block;width:100%;padding:10px 13px;background:var(--bg2);border:1px solid var(--b2);border-radius:var(--r);color:var(--t1);font-size:13.5px;transition:border-color var(--ease);outline:none}
+.sg input:focus,.sg select:focus,.sg textarea:focus{border-color:var(--b3)}
 .sg input::placeholder,.sg textarea::placeholder{color:var(--t4)}
 .sg select option{background:var(--bg2)}
 .sg textarea{resize:vertical;min-height:85px;font-size:13px;line-height:1.6}
-.sg input[disabled],.sg select[disabled]{opacity:.45;cursor:not-allowed}
+.sg input[disabled]{opacity:.45;cursor:not-allowed}
 .sh{font-size:12px;color:var(--t3);margin-top:5px;line-height:1.5}
 .sh a{color:var(--blue);text-decoration:underline}
-.sbtn{
-  padding:10px 20px;background:var(--t1);color:var(--bg);
-  font-size:13.5px;font-weight:600;border-radius:var(--r);
-  transition:opacity var(--ease);
-}
+.sbtn{padding:10px 20px;background:var(--t1);color:var(--bg);font-size:13.5px;font-weight:600;border-radius:var(--r);transition:opacity var(--ease);cursor:pointer}
 .sbtn:hover{opacity:.85}
-.sbtn2{
-  padding:10px 16px;background:var(--bg2);border:1px solid var(--b2);
-  border-radius:var(--r);font-size:13.5px;font-weight:500;color:var(--t2);
-  transition:all var(--ease);
-}
+.sbtn2{padding:10px 16px;background:var(--bg2);border:1px solid var(--b2);border-radius:var(--r);font-size:13.5px;font-weight:500;color:var(--t2);transition:all var(--ease);cursor:pointer}
 .sbtn2:hover{background:var(--bg3);border-color:var(--b3);color:var(--t1)}
-.kw{position:relative}
-.kw input{padding-right:42px}
-.ktgl{
-  position:absolute;right:9px;top:50%;transform:translateY(-50%);
-  width:26px;height:26px;border-radius:5px;display:grid;place-items:center;
-  color:var(--t3);transition:background var(--ease),color var(--ease);
-}
-.ktgl:hover{background:var(--bg3);color:var(--t1)}
-.ktgl svg{width:14px;height:14px}
+.kw{position:relative}.kw input{padding-right:42px}
+.ktgl{position:absolute;right:9px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:5px;display:grid;place-items:center;color:var(--t3);transition:background var(--ease),color var(--ease)}
+.ktgl:hover{background:var(--bg3);color:var(--t1)}.ktgl svg{width:14px;height:14px}
 .saved-ind{display:none;font-size:12px;color:var(--green);align-items:center;gap:4px;margin-top:5px}
-.saved-ind.show{display:flex}
-.saved-ind svg{width:13px;height:13px}
-
-/* upgrade modal */
+.saved-ind.show{display:flex}.saved-ind svg{width:13px;height:13px}
+ 
+/* UPGRADE */
 .up-h{text-align:center;margin-bottom:24px}
-.up-icon{
-  width:52px;height:52px;margin:0 auto 12px;
-  background:rgba(228,199,107,.07);border:1px solid rgba(228,199,107,.18);
-  border-radius:14px;display:grid;place-items:center;
-}
+.up-icon{width:52px;height:52px;margin:0 auto 12px;background:rgba(228,199,107,.07);border:1px solid rgba(228,199,107,.18);border-radius:14px;display:grid;place-items:center}
 .up-icon svg{width:26px;height:26px;color:var(--gold)}
 .up-title{font-size:21px;font-weight:600;letter-spacing:-.5px;margin-bottom:5px}
 .up-sub{font-size:13.5px;color:var(--t2);line-height:1.5}
 .plans{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:20px}
-.plan-card{
-  background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rl);
-  padding:18px;cursor:pointer;transition:all var(--ease);position:relative;
-}
-.plan-card:hover{border-color:var(--b3)}
-.plan-card.active{border-color:var(--gold2);background:rgba(228,199,107,.03)}
-.plan-badge{
-  position:absolute;top:-9px;left:50%;transform:translateX(-50%);
-  background:var(--gold);color:#000;font-size:10px;font-weight:700;
-  letter-spacing:.05em;padding:2px 9px;border-radius:99px;white-space:nowrap;
-}
+.plan-card{background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rl);padding:18px;cursor:pointer;transition:all var(--ease);position:relative}
+.plan-card:hover{border-color:var(--b3)}.plan-card.active{border-color:#8a7535;background:rgba(228,199,107,.03)}
+.plan-badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-size:10px;font-weight:700;letter-spacing:.05em;padding:2px 9px;border-radius:99px;white-space:nowrap}
 .plan-name{font-size:13px;font-weight:600;margin-bottom:3px}
 .plan-price{font-size:25px;font-weight:700;letter-spacing:-1px;line-height:1}
 .plan-price span{font-size:13px;font-weight:400;color:var(--t3)}
@@ -481,83 +230,57 @@ input,textarea,select{font-family:var(--font)}
 .up-feats{margin-bottom:20px}
 .up-feat{display:flex;align-items:center;gap:9px;padding:5px 0;font-size:13.5px;color:var(--t2)}
 .up-feat svg{width:15px;height:15px;color:var(--green);flex-shrink:0}
-.up-cta{
-  width:100%;padding:13px;background:var(--gold);color:#000;
-  font-size:14.5px;font-weight:700;border-radius:var(--r);
-  display:flex;align-items:center;justify-content:center;gap:7px;
-  transition:opacity var(--ease),transform .1s;
-}
-.up-cta:hover{opacity:.9}
-.up-cta:active{transform:scale(.99)}
-.up-cta svg{width:15px;height:15px}
+.up-cta{width:100%;padding:13px;background:var(--gold);color:#000;font-size:14.5px;font-weight:700;border-radius:var(--r);display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity var(--ease),transform .1s;cursor:pointer}
+.up-cta:hover{opacity:.9}.up-cta:active{transform:scale(.99)}.up-cta svg{width:15px;height:15px}
 .up-note{text-align:center;font-size:12px;color:var(--t3);margin-top:9px;line-height:1.5}
-.stripe-wrap{
-  display:none;background:var(--bg2);border:1px solid var(--b2);
-  border-radius:var(--r);padding:14px;margin-top:14px;
-}
+.stripe-wrap{display:none;background:var(--bg2);border:1px solid var(--b2);border-radius:var(--r);padding:14px;margin-top:14px}
 .stripe-wrap.show{display:block}
 #stripe-errs{color:var(--red);font-size:12.5px;margin-top:7px}
-.stripe-pay{
-  margin-top:12px;width:100%;padding:11px;background:var(--gold);color:#000;
-  font-weight:700;font-size:14px;border-radius:var(--r);transition:opacity var(--ease);
-}
+.stripe-pay{margin-top:12px;width:100%;padding:11px;background:var(--gold);color:#000;font-weight:700;font-size:14px;border-radius:var(--r);transition:opacity var(--ease);cursor:pointer}
 .stripe-pay:hover{opacity:.9}
-
-/* ═══════════════════════════════════════════
-   TOAST
-═══════════════════════════════════════════ */
-#toast{
-  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
-  background:var(--bg3);border:1px solid var(--b3);color:var(--t1);
-  border-radius:99px;padding:9px 18px;font-size:13.5px;font-weight:500;
-  box-shadow:var(--shadow);z-index:999;display:none;align-items:center;gap:7px;
-  white-space:nowrap;animation:fadeUp .2s ease both;
-}
-#toast.show{display:flex}
+ 
+/* TOAST */
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--bg3);border:1px solid var(--b3);color:var(--t1);border-radius:99px;padding:9px 18px;font-size:13.5px;font-weight:500;box-shadow:var(--shadow);z-index:999;display:none;align-items:center;gap:7px;white-space:nowrap}
+#toast.show{display:flex;animation:fadeUp .2s ease both}
 #toast svg{width:14px;height:14px;flex-shrink:0}
-#toast.s{color:var(--green)}
-#toast.e{color:var(--red)}
-
-/* ═══ RESPONSIVE ═══ */
+#toast.s{color:var(--green)}#toast.e{color:var(--red)}
+ 
 @media(max-width:620px){
   .sidebar{position:fixed;left:0;top:0;height:100vh;z-index:50;transform:translateX(-100%);transition:transform var(--ease)}
   .sidebar.mob-open{transform:translateX(0)}
   .sidebar.collapsed{transform:translateX(-100%);width:var(--sw);border-right:1px solid var(--b1)}
   .plans{grid-template-columns:1fr}
-  .bub-user,.bub-ai{max-width:95%}
 }
 </style>
 </head>
 <body>
-
-<!-- ════════════════════════════════════
-     AUTH PAGE
-════════════════════════════════════ -->
+ 
+<!-- AUTH PAGE -->
 <div id="auth-page" class="page active">
   <div class="auth-card">
     <div class="auth-logo">
       <div class="auth-logo-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/><path d="M12 12c-5 0-9 2.5-9 6v1a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-1c0-3.5-4-6-9-6z"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
       </div>
       <span class="auth-logo-name">ARIA</span>
     </div>
-
+ 
     <!-- LOGIN -->
     <div id="login-form">
       <h2 class="auth-h">Welcome back</h2>
       <p class="auth-sub">Sign in to continue to ARIA</p>
       <div class="auth-err" id="lerr"></div>
       <div class="field"><label>Email</label><input type="email" id="l-email" placeholder="you@example.com" autocomplete="email"/></div>
-      <div class="field"><label>Password</label><input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password"/></div>
+      <div class="field"><label>Password</label><input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
       <button class="btn-p" id="l-btn" onclick="doLogin()"><span>Sign in</span></button>
       <div class="or-div">or</div>
       <button class="btn-google" onclick="doGoogle()">
-        <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        <svg viewBox="0 0 24 24" width="17" height="17"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
         Continue with Google
       </button>
       <div class="auth-sw">Don't have an account? <button onclick="authMode('reg')">Sign up</button></div>
     </div>
-
+ 
     <!-- REGISTER -->
     <div id="reg-form" style="display:none">
       <h2 class="auth-h">Create account</h2>
@@ -565,46 +288,36 @@ input,textarea,select{font-family:var(--font)}
       <div class="auth-err" id="rerr"></div>
       <div class="field"><label>Display name</label><input type="text" id="r-name" placeholder="Your name" autocomplete="name"/></div>
       <div class="field"><label>Email</label><input type="email" id="r-email" placeholder="you@example.com" autocomplete="email"/></div>
-      <div class="field"><label>Password</label><input type="password" id="r-pass" placeholder="Min 6 characters" autocomplete="new-password"/></div>
+      <div class="field"><label>Password</label><input type="password" id="r-pass" placeholder="Min 6 characters" autocomplete="new-password" onkeydown="if(event.key==='Enter')doRegister()"/></div>
       <button class="btn-p" id="r-btn" onclick="doRegister()"><span>Create account</span></button>
       <div class="or-div">or</div>
       <button class="btn-google" onclick="doGoogle()">
-        <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        <svg viewBox="0 0 24 24" width="17" height="17"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
         Continue with Google
       </button>
       <div class="auth-sw">Already have an account? <button onclick="authMode('login')">Sign in</button></div>
     </div>
   </div>
 </div>
-
-<!-- ════════════════════════════════════
-     APP PAGE
-════════════════════════════════════ -->
+ 
+<!-- APP PAGE -->
 <div id="app-page" class="page">
-
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sb">
     <div class="sb-top">
       <div class="sb-logo">
-        <div class="sb-logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/><path d="M12 12c-5 0-9 2.5-9 6v1a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-1c0-3.5-4-6-9-6z"/></svg>
-        </div>
+        <div class="sb-logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div>
         <span class="sb-logo-name">ARIA</span>
       </div>
-      <button class="icon-btn" onclick="toggleSB()" title="Collapse">
+      <button class="icon-btn" onclick="toggleSB()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
       </button>
     </div>
-
     <button class="new-btn" onclick="newChat()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
       New conversation
     </button>
-
-    <div class="hist-section" id="hist-list">
-      <div class="hist-label">Recent</div>
-    </div>
-
+    <div class="hist-section" id="hist-list"><div class="hist-label">Recent</div></div>
     <div class="sb-bottom">
       <div class="user-card" onclick="openSettings()">
         <div class="avatar" id="sb-av">?</div>
@@ -624,39 +337,24 @@ input,textarea,select{font-family:var(--font)}
       </button>
     </div>
   </aside>
-
+ 
   <!-- MAIN -->
   <div class="main">
-    <!-- TOPBAR -->
     <div class="topbar">
       <div class="tb-left">
         <button class="icon-btn" onclick="toggleSB()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
-        <!-- Model pill -->
         <div class="model-pill" id="mpill" onclick="toggleMDrop()">
           <div class="model-dot"></div>
           <span id="mlabel">GPT-4o mini</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           <div class="mdrop" id="mdrop">
-            <div class="mopt" onclick="pickModel('gpt-4o-mini','GPT-4o mini',false,event)">
-              <div><h4>GPT-4o mini</h4><p>Fast &amp; efficient for daily tasks</p></div>
-            </div>
-            <div class="mopt" onclick="pickModel('gpt-4o','GPT-4o',false,event)">
-              <div><h4>GPT-4o</h4><p>Most capable multimodal model</p></div>
-            </div>
-            <div class="mopt" onclick="pickModel('o1-mini','o1 mini',true,event)">
-              <div><h4>o1 mini</h4><p>Advanced reasoning &amp; coding</p></div>
-              <span class="mopt-lock">PRO</span>
-            </div>
-            <div class="mopt" onclick="pickModel('o1','o1',true,event)">
-              <div><h4>o1</h4><p>Frontier reasoning model</p></div>
-              <span class="mopt-lock">PRO</span>
-            </div>
-            <div class="mopt" onclick="pickModel('gpt-4-turbo','GPT-4 Turbo',true,event)">
-              <div><h4>GPT-4 Turbo</h4><p>High performance, 128k context</p></div>
-              <span class="mopt-lock">PRO</span>
-            </div>
+            <div class="mopt" onclick="pickModel('gpt-4o-mini','GPT-4o mini',false,event)"><div><h4>GPT-4o mini</h4><p>Fast &amp; efficient for daily tasks</p></div></div>
+            <div class="mopt" onclick="pickModel('gpt-4o','GPT-4o',false,event)"><div><h4>GPT-4o</h4><p>Most capable multimodal model</p></div></div>
+            <div class="mopt" onclick="pickModel('o1-mini','o1 mini',true,event)"><div><h4>o1 mini</h4><p>Advanced reasoning &amp; coding</p></div><span class="mopt-lock">PRO</span></div>
+            <div class="mopt" onclick="pickModel('o1','o1',true,event)"><div><h4>o1</h4><p>Frontier reasoning model</p></div><span class="mopt-lock">PRO</span></div>
+            <div class="mopt" onclick="pickModel('gpt-4-turbo','GPT-4 Turbo',true,event)"><div><h4>GPT-4 Turbo</h4><p>128k context window</p></div><span class="mopt-lock">PRO</span></div>
           </div>
         </div>
       </div>
@@ -669,63 +367,38 @@ input,textarea,select{font-family:var(--font)}
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
           Upgrade
         </button>
-        <button class="icon-btn" onclick="openSettings()" title="Settings">
+        <button class="icon-btn" onclick="openSettings()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         </button>
       </div>
     </div>
-
-    <!-- CHAT -->
+ 
     <div class="chat-wrap" id="chat-wrap">
       <div class="welcome" id="welcome">
-        <div class="w-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-        </div>
+        <div class="w-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div>
         <h1>What can I help with?</h1>
         <p>Ask anything — code, writing, analysis, math, or just chat.</p>
         <div class="chips">
-          <button class="chip" onclick="suggest('Explain how machine learning works in simple terms')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            Explain machine learning
-          </button>
-          <button class="chip" onclick="suggest('Write a Python web scraper for collecting news headlines')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            Write Python code
-          </button>
-          <button class="chip" onclick="suggest('Draft a cold outreach email for a SaaS product launch')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Draft an email
-          </button>
-          <button class="chip" onclick="suggest('What are the pros and cons of microservices architecture?')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-            Compare architectures
-          </button>
-          <button class="chip" onclick="suggest('Create a 30-day learning plan for learning React')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            Make a learning plan
-          </button>
-          <button class="chip" onclick="suggest('Debug this JavaScript: const sum = (a,b) => a - b; console.log(sum(5,3))')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3"/><path d="m15.7 10.5 3.3 1.9v4l-7 4-7-4v-4l3.3-1.9"/></svg>
-            Debug code
-          </button>
+          <button class="chip" onclick="suggest('Explain how machine learning works in simple terms')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Explain machine learning</button>
+          <button class="chip" onclick="suggest('Write a Python web scraper for news headlines')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Write Python code</button>
+          <button class="chip" onclick="suggest('Draft a cold outreach email for a SaaS product')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Draft an email</button>
+          <button class="chip" onclick="suggest('What are the pros and cons of microservices?')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Compare architectures</button>
+          <button class="chip" onclick="suggest('Create a 30-day learning plan for React')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Make a learning plan</button>
+          <button class="chip" onclick="suggest('Debug this JS: const sum = (a,b) => a - b;')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3"/><path d="m15.7 10.5 3.3 1.9v4l-7 4-7-4v-4l3.3-1.9"/></svg>Debug code</button>
         </div>
       </div>
       <div class="messages" id="messages" style="display:none"></div>
     </div>
-
-    <!-- INPUT -->
+ 
     <div class="input-area">
       <div class="key-banner hidden" id="key-banner">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        No OpenAI API key set. <a onclick="openSettings('api')">Add your key in Settings →</a>
+        No OpenAI API key set. <a onclick="openSettings('api')">Add in Settings →</a>
       </div>
       <div class="input-wrap">
-        <textarea id="chat-in" class="chat-in" placeholder="Message ARIA…" rows="1"
-          onkeydown="inKey(event)" oninput="autoR(this)"></textarea>
+        <textarea id="chat-in" class="chat-in" placeholder="Message ARIA…" rows="1" onkeydown="inKey(event)" oninput="autoR(this)"></textarea>
         <div class="in-tools">
-          <button class="in-tool" title="Attach (coming soon)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
-          </button>
+          <button class="in-tool" title="Attach (coming soon)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
           <button class="send-btn" id="send-btn" onclick="send()" disabled>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
           </button>
@@ -733,69 +406,49 @@ input,textarea,select{font-family:var(--font)}
       </div>
       <div class="in-meta">
         <span class="in-hint">Enter ↵ to send · Shift+Enter for new line</span>
-        <span class="in-model">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          <span id="meta-m">GPT-4o mini</span>
-        </span>
+        <span class="in-model"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg><span id="meta-m">GPT-4o mini</span></span>
       </div>
     </div>
   </div>
 </div>
-
-<!-- ════════════════════════════════════
-     SETTINGS MODAL
-════════════════════════════════════ -->
+ 
+<!-- SETTINGS MODAL -->
 <div class="overlay" id="settings-ov" onclick="closeSett(event)">
   <div class="modal wide" onclick="sp(event)">
-    <div class="mh">
-      <span class="mt">Settings</span>
-      <button class="mc" onclick="closeSett()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    </div>
+    <div class="mh"><span class="mt">Settings</span><button class="mc" onclick="closeSett()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="stabs">
-      <button class="stab active" data-t="api"     onclick="switchTab('api')">API Key</button>
-      <button class="stab"        data-t="account" onclick="switchTab('account')">Account</button>
-      <button class="stab"        data-t="ai"      onclick="switchTab('ai')">AI Config</button>
+      <button class="stab active" data-t="api" onclick="switchTab('api')">API Key</button>
+      <button class="stab" data-t="account" onclick="switchTab('account')">Account</button>
+      <button class="stab" data-t="ai" onclick="switchTab('ai')">AI Config</button>
     </div>
-
-    <!-- API KEY PANEL -->
     <div class="spanel active" id="tab-api">
       <div class="sg">
         <label>OpenAI API Key</label>
         <div class="kw">
           <input type="password" id="oai-key" placeholder="sk-…" autocomplete="off" oninput="chkBanner()"/>
-          <button class="ktgl" onclick="toggleEye()" title="Show/hide">
-            <svg id="eye-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
+          <button class="ktgl" onclick="toggleEye()"><svg id="eye-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
         </div>
-        <p class="sh">Your key is stored locally in your browser only — never sent to our servers.<br/>Get yours at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys →</a></p>
-        <div class="saved-ind" id="key-saved">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Key saved successfully
-        </div>
+        <p class="sh">Key is stored only in your browser · <a href="https://platform.openai.com/api-keys" target="_blank">Get key here →</a></p>
+        <div class="saved-ind" id="key-saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Key saved!</div>
       </div>
       <div class="sg">
         <label>Organization ID <span style="color:var(--t3);font-weight:400">(optional)</span></label>
-        <input type="text" id="oai-org" placeholder="org-…" />
-        <p class="sh">Leave empty if you don't use organizations.</p>
+        <input type="text" id="oai-org" placeholder="org-…"/>
       </div>
-      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button class="sbtn" onclick="saveKey()">Save key</button>
         <button class="sbtn2" id="test-btn" onclick="testKey()">Test connection</button>
       </div>
     </div>
-
-    <!-- ACCOUNT PANEL -->
     <div class="spanel" id="tab-account">
       <div class="sg"><label>Display Name</label><input type="text" id="s-name" placeholder="Your name"/></div>
       <div class="sg"><label>Email</label><input type="email" id="s-email" disabled/></div>
       <div class="sg"><label>Current Plan</label><input type="text" id="s-plan" disabled/></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button class="sbtn" onclick="saveAccount()">Save changes</button>
-        <button onclick="openUpgrade();closeSett();" style="padding:10px 16px;background:rgba(228,199,107,.08);border:1px solid rgba(228,199,107,.2);border-radius:var(--r);font-size:13.5px;font-weight:600;color:var(--gold);cursor:pointer;transition:all var(--ease);">⭐ Upgrade</button>
+        <button onclick="openUpgrade();closeSett();" style="padding:10px 16px;background:rgba(228,199,107,.08);border:1px solid rgba(228,199,107,.2);border-radius:var(--r);font-size:13.5px;font-weight:600;color:var(--gold);cursor:pointer;">⭐ Upgrade</button>
       </div>
     </div>
-
-    <!-- AI CONFIG PANEL -->
     <div class="spanel" id="tab-ai">
       <div class="sg">
         <label>Default Model</label>
@@ -809,9 +462,7 @@ input,textarea,select{font-family:var(--font)}
       </div>
       <div class="sg">
         <label>Temperature — <span id="tv">0.7</span></label>
-        <input type="range" id="s-temp" min="0" max="2" step="0.1" value="0.7"
-          oninput="document.getElementById('tv').textContent=this.value"
-          style="width:100%;accent-color:var(--t1);cursor:pointer;margin-top:4px"/>
+        <input type="range" id="s-temp" min="0" max="2" step="0.1" value="0.7" oninput="document.getElementById('tv').textContent=this.value" style="width:100%;accent-color:var(--t1);cursor:pointer;margin-top:4px"/>
         <p class="sh">Higher = more creative · Lower = more precise</p>
       </div>
       <div class="sg">
@@ -826,31 +477,21 @@ input,textarea,select{font-family:var(--font)}
       <div class="sg">
         <label>System Prompt</label>
         <textarea id="s-sys">You are ARIA, a highly capable AI assistant. Be concise, accurate, and genuinely helpful. Format code in markdown code blocks. When appropriate, use lists and headers for clarity.</textarea>
-        <p class="sh">Defines ARIA's behavior across all conversations.</p>
       </div>
       <button class="sbtn" onclick="saveAI()">Save configuration</button>
     </div>
   </div>
 </div>
-
-<!-- ════════════════════════════════════
-     UPGRADE MODAL
-════════════════════════════════════ -->
+ 
+<!-- UPGRADE MODAL -->
 <div class="overlay" id="up-ov" onclick="closeUp(event)">
   <div class="modal wide" onclick="sp(event)">
-    <div class="mh">
-      <span class="mt">Upgrade to Premium</span>
-      <button class="mc" onclick="closeUp()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    </div>
-
+    <div class="mh"><span class="mt">Upgrade to Premium</span><button class="mc" onclick="closeUp()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="up-h">
-      <div class="up-icon">
-        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      </div>
+      <div class="up-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
       <div class="up-title">Unlock the full ARIA experience</div>
       <div class="up-sub">Access the most powerful AI models with unlimited messages</div>
     </div>
-
     <div class="plans">
       <div class="plan-card" id="pc-mo" onclick="pickPlan('monthly')">
         <div class="plan-name">Monthly</div>
@@ -864,7 +505,6 @@ input,textarea,select{font-family:var(--font)}
         <div class="plan-desc">Billed $96/year. Save 33%.</div>
       </div>
     </div>
-
     <div class="up-feats">
       <div class="up-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>GPT-4o, o1 mini, o1, GPT-4 Turbo models</div>
       <div class="up-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited messages per day</div>
@@ -872,186 +512,221 @@ input,textarea,select{font-family:var(--font)}
       <div class="up-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Chat history &amp; export</div>
       <div class="up-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Early access to new features</div>
     </div>
-
     <button class="up-cta" id="up-cta" onclick="startCheckout()">
       <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
       Get Premium — $8/mo
     </button>
     <div class="up-note">Secure payment via Stripe · Cancel anytime · No hidden fees</div>
-
     <div class="stripe-wrap" id="stripe-wrap">
-      <div id="stripe-el">
-        <p style="font-size:13px;color:var(--t3)">🔒 Configure your Stripe Publishable Key in the JS config section to enable real payments.</p>
-      </div>
+      <div id="stripe-el"></div>
       <div id="stripe-errs"></div>
       <button class="stripe-pay" onclick="confirmPay()">Pay now</button>
     </div>
   </div>
 </div>
-
-<!-- TOAST -->
-<div id="toast">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-  <span id="toast-m">Saved!</span>
-</div>
-
+ 
+<div id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span id="toast-m">Saved!</span></div>
+ 
 <!-- ════════════════════════════════════
-     JAVASCRIPT
+     FIREBASE (module script)
+════════════════════════════════════ -->
+<script type="module">
+import { initializeApp }                                    from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword,
+         signInWithEmailAndPassword, signOut,
+         onAuthStateChanged, GoogleAuthProvider,
+         signInWithPopup }                                   from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { getFirestore, doc, getDoc,
+         setDoc, serverTimestamp }                           from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+ 
+const firebaseConfig = {
+  apiKey:            "AIzaSyAvQ2Io0VeVMciG3sdHg-FbCyVPn6QKSJI",
+  authDomain:        "ariaai-96048.firebaseapp.com",
+  projectId:         "ariaai-96048",
+  storageBucket:     "ariaai-96048.firebasestorage.app",
+  messagingSenderId: "60793873957",
+  appId:             "1:60793873957:web:f3dd24cad115a278b1c1cc"
+};
+ 
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const gp   = new GoogleAuthProvider();
+ 
+// expose everything to window so the regular script can use it
+window.$auth = auth;
+window.$db   = db;
+window.$gp   = gp;
+window.$fbFn = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, doc, getDoc, setDoc, serverTimestamp };
+ 
+// auth state — runs here in module context
+onAuthStateChanged(auth, async u => {
+  if(u){
+    window._u = u;
+    window._pm = false;
+    try{
+      const s = await getDoc(doc(db,'users',u.uid));
+      if(s.exists()){ const d=s.data(); window._pm=!!d.premium; if(d.displayName)u._dn=d.displayName; }
+    }catch(e){}
+    // call into the regular script
+    if(typeof window.onUser==='function') window.onUser(u);
+  } else {
+    window._u = null; window._pm = false;
+    if(typeof window.onSignOut==='function') window.onSignOut();
+  }
+});
+</script>
+ 
+<!-- ════════════════════════════════════
+     MAIN SCRIPT (regular, non-module)
 ════════════════════════════════════ -->
 <script>
-/* ════ CONFIG — shecvale es aq ════ */
-const STRIPE_PK      = 'pk_test_YOUR_STRIPE_KEY';
-const PRICE_MONTHLY  = 'price_YOUR_MONTHLY_ID';
-const PRICE_YEARLY   = 'price_YOUR_YEARLY_ID';
-
+/* ════ KEYS ════ */
+const OPENAI_KEY    = 'sk-proj-0K1BmbHUASt8_SYJgSgJHPcXtmVOrx1H2LuDYnh9p4Uwl_9ZSpe8C4qG3oajVVBWPtbl-HmGYNT3BlbkFJA2P3aU1Zt57UMwESvUl3Hz8D8PPjFRuka7hDNkKzWxMT0Bx-vjT91KUKvjCmny395wYHIlywyQA';
+const STRIPE_PK     = 'pk_test_51TDm98AP4Aj6zD2xIULtODFFnaE1SmU8FyAtENzz2wyx6neDsTv1YsX71C5vDfwbhB5uETkQB4osvMJQQMFInJUU00CSLlvkYW';
+const PRICE_MONTHLY = 'price_YOUR_MONTHLY_ID';
+const PRICE_YEARLY  = 'price_YOUR_YEARLY_ID';
+ 
 /* ════ STATE ════ */
-let user    = null;
-let premium = false;
-let model   = 'gpt-4o-mini';
-let plan    = 'yearly';
-let convs   = [];
-let convId  = null;
-let busy    = false;
-let sbOpen  = true;
-let stripeI = null;
-let stripeC = null;
-let cfg     = { temp:0.7, tok:4096, sys:'You are ARIA, a highly capable AI assistant. Be concise, accurate, and genuinely helpful. Format code in markdown code blocks. When appropriate, use lists and headers for clarity.' };
-
-/* ════ FIREBASE INIT ════ */
-function waitFB(cb,n=0){ if(window.$fb){cb(window.$fb)}else if(n<40){setTimeout(()=>waitFB(cb,n+1),150)}else{console.error('Firebase timeout')} }
-
-waitFB(({auth,onAuthStateChanged})=>{
-  onAuthStateChanged(auth, async u=>{
-    if(u){ user=u; await loadUser(); showApp(); }
-    else { user=null; premium=false; showAuth(); }
-  });
-});
-
-async function loadUser(){
-  try{
-    const {db,doc,getDoc}=window.$fb;
-    const s=await getDoc(doc(db,'users',user.uid));
-    if(s.exists()){ const d=s.data(); premium=!!d.premium; if(d.displayName)user._dn=d.displayName; }
-  }catch(e){}
+let model  = 'gpt-4o-mini';
+let plan   = 'yearly';
+let convs  = [];
+let convId = null;
+let busy   = false;
+let sbOpen = true;
+let stripeI= null;
+let stripeC= null;
+let cfg    = { temp:0.7, tok:4096, sys:'You are ARIA, a highly capable AI assistant. Be concise, accurate, and genuinely helpful. Format code in markdown code blocks. When appropriate, use lists and headers for clarity.' };
+ 
+/* ════ FIREBASE BRIDGE ════
+   Firebase module calls these when auth state changes */
+window.onUser = function(u){
+  loadLocal();
+  renderHist();
+  chkBanner();
   updUI();
-}
-
-async function mkUserDoc(u,name){
-  try{
-    const {db,doc,setDoc,serverTimestamp}=window.$fb;
-    await setDoc(doc(db,'users',u.uid),{email:u.email,displayName:name||u.displayName||'',premium:false,createdAt:serverTimestamp()},{merge:true});
-  }catch(e){}
-}
-
-function updUI(){
-  if(!user)return;
-  const name=user._dn||user.displayName||user.email?.split('@')[0]||'User';
-  document.getElementById('sb-av').textContent=name.slice(0,2).toUpperCase();
-  document.getElementById('sb-name').textContent=name;
-  const planEl=document.getElementById('sb-plan');
-  planEl.textContent=premium?'✦ Premium':'Free plan';
-  planEl.className='user-plan'+(premium?' gold':'');
-  document.getElementById('up-btn').style.display=premium?'none':'flex';
-  const pmb=document.getElementById('pm-badge');
-  pmb.style.display=premium?'flex':'none';
-  document.getElementById('s-email').value=user.email||'';
-  document.getElementById('s-name').value=name;
-  document.getElementById('s-plan').value=premium?'Premium ✦':'Free';
-}
-
-/* ════ AUTH HANDLERS ════ */
+  document.getElementById('auth-page').classList.remove('active');
+  document.getElementById('app-page').classList.add('active');
+};
+ 
+window.onSignOut = function(){
+  document.getElementById('app-page').classList.remove('active');
+  document.getElementById('auth-page').classList.add('active');
+};
+ 
+function getUser(){ return window._u; }
+function isPremium(){ return !!window._pm; }
+ 
+/* ════ AUTH ════ */
 async function doLogin(){
   const btn=document.getElementById('l-btn');
   const em=document.getElementById('l-email').value.trim();
   const pw=document.getElementById('l-pass').value;
-  const e=document.getElementById('lerr');
-  e.style.display='none';
-  if(!em||!pw){showErr(e,'Please fill in all fields.');return;}
+  const errEl=document.getElementById('lerr');
+  errEl.style.display='none';
+  if(!em||!pw){showErr(errEl,'Please fill in all fields.');return;}
+  if(!window.$auth){showErr(errEl,'App loading, please wait…');return;}
   btn.disabled=true; btn.innerHTML='<div class="spin"></div>';
   try{
-    const {auth,signInWithEmailAndPassword}=window.$fb;
-    await signInWithEmailAndPassword(auth,em,pw);
-  }catch(err){
+    await window.$fbFn.signInWithEmailAndPassword(window.$auth,em,pw);
+  }catch(e){
     btn.disabled=false; btn.innerHTML='<span>Sign in</span>';
-    showErr(e,fbErr(err.code));
+    showErr(errEl,fbErr(e.code));
   }
 }
-
+ 
 async function doRegister(){
   const btn=document.getElementById('r-btn');
   const nm=document.getElementById('r-name').value.trim();
   const em=document.getElementById('r-email').value.trim();
   const pw=document.getElementById('r-pass').value;
-  const e=document.getElementById('rerr');
-  e.style.display='none';
-  if(!nm||!em||!pw){showErr(e,'Please fill in all fields.');return;}
-  if(pw.length<6){showErr(e,'Password must be at least 6 characters.');return;}
-  btn.disabled=true; btn.innerHTML='<div class="spin"></div>';
+  const errEl=document.getElementById('rerr');
+  errEl.style.display='none';
+  if(!nm||!em||!pw){showErr(errEl,'Please fill in all fields.');return;}
+  if(pw.length<6){showErr(errEl,'Password must be at least 6 characters.');return;}
+  if(!window.$auth){showErr(errEl,'App loading, please wait…');return;}
+  btn.disabled=true; btn.innerHTML='<div class="spin-w"></div>';
   try{
-    const {auth,createUserWithEmailAndPassword}=window.$fb;
-    const cred=await createUserWithEmailAndPassword(auth,em,pw);
-    await mkUserDoc(cred.user,nm);
+    const {createUserWithEmailAndPassword,doc,setDoc,serverTimestamp}=window.$fbFn;
+    const cred=await createUserWithEmailAndPassword(window.$auth,em,pw);
+    await setDoc(window.$fbFn.doc(window.$db,'users',cred.user.uid),{
+      email:em, displayName:nm, premium:false, createdAt:serverTimestamp()
+    },{merge:true});
     cred.user._dn=nm;
-  }catch(err){
+  }catch(e){
     btn.disabled=false; btn.innerHTML='<span>Create account</span>';
-    showErr(e,fbErr(err.code));
+    showErr(errEl,fbErr(e.code));
   }
 }
-
+ 
 async function doGoogle(){
+  if(!window.$auth){return;}
   try{
-    const {auth,signInWithPopup,gp}=window.$fb;
-    const res=await signInWithPopup(auth,gp);
-    await mkUserDoc(res.user,res.user.displayName);
-  }catch(err){
+    const {signInWithPopup}=window.$fbFn;
+    const res=await signInWithPopup(window.$auth,window.$gp);
+    const {doc,setDoc,serverTimestamp}=window.$fbFn;
+    await setDoc(doc(window.$db,'users',res.user.uid),{
+      email:res.user.email, displayName:res.user.displayName||'', premium:false, createdAt:serverTimestamp()
+    },{merge:true});
+  }catch(e){
     const id=document.getElementById('login-form').style.display!=='none'?'lerr':'rerr';
-    showErr(document.getElementById(id),fbErr(err.code));
+    showErr(document.getElementById(id),fbErr(e.code));
   }
 }
-
+ 
 async function doLogout(){
-  try{const {auth,signOut}=window.$fb; await signOut(auth);}catch(e){}
+  try{await window.$fbFn.signOut(window.$auth);}catch(e){}
 }
-
+ 
 function showErr(el,msg){el.textContent=msg;el.style.display='block';}
 function fbErr(c){
   const m={
     'auth/invalid-email':'Invalid email address.',
     'auth/user-not-found':'No account with that email.',
     'auth/wrong-password':'Incorrect password.',
+    'auth/invalid-credential':'Wrong email or password.',
     'auth/email-already-in-use':'Email already in use.',
-    'auth/weak-password':'Password is too weak.',
+    'auth/weak-password':'Password is too weak (min 6 chars).',
     'auth/popup-closed-by-user':'Popup was closed.',
     'auth/network-request-failed':'Network error. Check connection.',
-    'auth/configuration-not-found':'Firebase not configured yet.',
-    'auth/too-many-requests':'Too many attempts. Try later.',
+    'auth/too-many-requests':'Too many attempts. Try again later.',
+    'auth/operation-not-allowed':'Email/Password sign-in not enabled in Firebase.',
+    'auth/unauthorized-domain':'Add this domain in Firebase → Authentication → Settings.',
   };
   return m[c]||`Error: ${c}`;
 }
-
+ 
 function authMode(m){
   document.getElementById('login-form').style.display=m==='login'?'block':'none';
   document.getElementById('reg-form').style.display=m==='reg'?'block':'none';
   document.getElementById('lerr').style.display='none';
   document.getElementById('rerr').style.display='none';
 }
-
-/* ════ PAGES ════ */
-function showAuth(){
-  document.getElementById('auth-page').classList.add('active');
-  document.getElementById('app-page').classList.remove('active');
+ 
+/* ════ UI UPDATE ════ */
+function updUI(){
+  const u=getUser(); if(!u)return;
+  const name=u._dn||u.displayName||u.email?.split('@')[0]||'User';
+  document.getElementById('sb-av').textContent=name.slice(0,2).toUpperCase();
+  document.getElementById('sb-name').textContent=name;
+  const pl=document.getElementById('sb-plan');
+  pl.textContent=isPremium()?'✦ Premium':'Free plan';
+  pl.className='user-plan'+(isPremium()?' gold':'');
+  document.getElementById('up-btn').style.display=isPremium()?'none':'flex';
+  document.getElementById('pm-badge').style.display=isPremium()?'flex':'none';
+  document.getElementById('s-email').value=u.email||'';
+  document.getElementById('s-name').value=name;
+  document.getElementById('s-plan').value=isPremium()?'Premium ✦':'Free';
 }
-function showApp(){
-  document.getElementById('auth-page').classList.remove('active');
-  document.getElementById('app-page').classList.add('active');
-  loadLocal(); renderHist(); chkBanner();
-}
-
+ 
 /* ════ LOCAL STORAGE ════ */
 function loadLocal(){
-  try{convs=JSON.parse(localStorage.getItem('aria_c_'+(user?.uid||'g'))||'[]');}catch{convs=[];}
+  const u=getUser();
+  try{convs=JSON.parse(localStorage.getItem('aria_c_'+(u?.uid||'g'))||'[]');}catch{convs=[];}
   try{const s=JSON.parse(localStorage.getItem('aria_cfg')||'{}');cfg={...cfg,...s};}catch{}
-  document.getElementById('oai-key').value=localStorage.getItem('aria_key')||'';
+  // load stored key or use built-in
+  const storedKey=localStorage.getItem('aria_key')||'';
+  document.getElementById('oai-key').value=storedKey;
   document.getElementById('oai-org').value=localStorage.getItem('aria_org')||'';
   document.getElementById('s-temp').value=cfg.temp;
   document.getElementById('tv').textContent=cfg.temp;
@@ -1059,8 +734,8 @@ function loadLocal(){
   document.getElementById('s-sys').value=cfg.sys;
   document.getElementById('s-model').value=model;
 }
-function saveC(){localStorage.setItem('aria_c_'+(user?.uid||'g'),JSON.stringify(convs.slice(-50)));}
-
+function saveC(){const u=getUser();localStorage.setItem('aria_c_'+(u?.uid||'g'),JSON.stringify(convs.slice(-50)));}
+ 
 /* ════ CONVERSATIONS ════ */
 function newChat(){
   convId=null;
@@ -1069,19 +744,19 @@ function newChat(){
   document.getElementById('welcome').style.display='flex';
   document.querySelectorAll('.hist-item').forEach(i=>i.classList.remove('active'));
 }
-
+ 
 function loadConv(id){
-  const c=convs.find(x=>x.id===id); if(!c)return;
+  const c=convs.find(x=>x.id===id);if(!c)return;
   convId=id;
-  const msgs=document.getElementById('messages');
   document.getElementById('welcome').style.display='none';
-  msgs.style.display='flex'; msgs.innerHTML='';
+  const msgs=document.getElementById('messages');
+  msgs.style.display='flex';msgs.innerHTML='';
   c.messages.forEach(m=>addMsgDOM(m.role,m.content,false));
   document.querySelectorAll('.hist-item').forEach(i=>i.classList.remove('active'));
   document.querySelector(`[data-cid="${id}"]`)?.classList.add('active');
   scrollC();
 }
-
+ 
 function renderHist(){
   const l=document.getElementById('hist-list');
   if(!convs.length){l.innerHTML='<div class="hist-label">No conversations yet</div>';return;}
@@ -1095,26 +770,30 @@ function renderHist(){
     l.appendChild(el);
   });
 }
-
-/* ════ CHAT (OpenAI) ════ */
-function getKey(){return document.getElementById('oai-key').value.trim()||localStorage.getItem('aria_key')||'';}
-
-function chkBanner(){
-  document.getElementById('key-banner').classList.toggle('hidden',!!getKey());
+ 
+/* ════ CHAT ════ */
+function getKey(){
+  // priority: user stored key → built-in key
+  return localStorage.getItem('aria_key') || document.getElementById('oai-key').value.trim() || OPENAI_KEY;
 }
-
+ 
+function chkBanner(){
+  // banner hidden if we have any key (built-in always exists)
+  document.getElementById('key-banner').classList.add('hidden');
+}
+ 
 async function send(){
   if(busy)return;
   const inp=document.getElementById('chat-in');
-  const txt=inp.value.trim(); if(!txt)return;
+  const txt=inp.value.trim();if(!txt)return;
   const key=getKey();
   if(!key){openSettings('api');toast('Add your OpenAI API key first','e');return;}
-  const prem=['o1','o1-mini','gpt-4-turbo'];
-  if(prem.includes(model)&&!premium){openUpgrade();toast('This model requires Premium','e');return;}
-
-  inp.value=''; autoR(inp);
+  const premModels=['o1','o1-mini','gpt-4-turbo'];
+  if(premModels.includes(model)&&!isPremium()){openUpgrade();toast('This model requires Premium','e');return;}
+ 
+  inp.value='';autoR(inp);
   document.getElementById('send-btn').disabled=true;
-
+ 
   if(!convId){
     convId='c'+Date.now();
     convs.push({id:convId,title:txt.slice(0,42),messages:[]});
@@ -1122,20 +801,19 @@ async function send(){
     document.getElementById('messages').style.display='flex';
     renderHist();
   }
-
+ 
   const c=convs.find(x=>x.id===convId);
   c.messages.push({role:'user',content:txt});
   addMsgDOM('user',txt);
-
+ 
   const tid='t'+Date.now();
-  addTyping(tid); scrollC(); busy=true;
-
+  addTyping(tid);scrollC();busy=true;
+ 
   try{
     const apiMsgs=[
       {role:'system',content:cfg.sys},
       ...c.messages.slice(-20).map(m=>({role:m.role,content:m.content}))
     ];
-
     const res=await fetch('https://api.openai.com/v1/chat/completions',{
       method:'POST',
       headers:{
@@ -1143,22 +821,16 @@ async function send(){
         'Authorization':`Bearer ${key}`,
         ...(localStorage.getItem('aria_org')?{'OpenAI-Organization':localStorage.getItem('aria_org')}:{})
       },
-      body:JSON.stringify({
-        model,
-        messages:apiMsgs,
-        temperature:parseFloat(cfg.temp),
-        max_tokens:parseInt(cfg.tok),
-        stream:true
-      })
+      body:JSON.stringify({model,messages:apiMsgs,temperature:parseFloat(cfg.temp),max_tokens:parseInt(cfg.tok),stream:true})
     });
-
+ 
     rmTyping(tid);
-
+ 
     if(!res.ok){
       const err=await res.json().catch(()=>({}));
       throw new Error(err.error?.message||`HTTP ${res.status}`);
     }
-
+ 
     let aiTxt='';
     const mid='m'+Date.now();
     addMsgDOM('ai','',false,mid);
@@ -1166,12 +838,12 @@ async function send(){
     const reader=res.body.getReader();
     const dec=new TextDecoder();
     let buf='';
-
+ 
     while(true){
       const {value,done}=await reader.read();
       if(done)break;
       buf+=dec.decode(value,{stream:true});
-      const lines=buf.split('\n'); buf=lines.pop();
+      const lines=buf.split('\n');buf=lines.pop();
       for(const ln of lines){
         if(!ln.startsWith('data: '))continue;
         const d=ln.slice(6).trim();
@@ -1185,85 +857,57 @@ async function send(){
         }catch{}
       }
     }
-
     if(cel){cel.innerHTML=md(aiTxt);hljs.highlightAll();}
     c.messages.push({role:'assistant',content:aiTxt});
     saveC();
-
   }catch(e){
     rmTyping(tid);
-    addMsgDOM('ai',`**Error:** ${e.message}\n\nCheck your API key and try again.`);
+    addMsgDOM('ai',`**Error:** ${e.message}`);
   }
-
+ 
   busy=false;
   document.getElementById('send-btn').disabled=false;
   document.getElementById('chat-in').focus();
   scrollC();
 }
-
+ 
 function addMsgDOM(role,content,animate=true,id=null){
   const msgs=document.getElementById('messages');
   const row=document.createElement('div');
   row.className=`mrow ${role}`;
+  const mid=id||('m'+Date.now());
   if(role==='user'){
-    row.innerHTML=`
-      <div>
-        <div class="bub-user">${esc(content)}</div>
-        <div class="mactions">
-          <button class="mact" onclick="cp(this,'${esc(content).replace(/'/g,"\\'")}')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          </button>
-        </div>
-      </div>`;
+    row.innerHTML=`<div><div class="bub-user">${esc(content)}</div><div class="mactions"><button class="mact" onclick="cp('${esc(content).replace(/'/g,"\\'")}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div>`;
   }else{
-    const mid=id||('m'+Date.now());
-    row.innerHTML=`
-      <div class="bub-ai">
-        <div class="ai-av">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/><path d="M12 12c-5 0-9 2.5-9 6v1a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-1c0-3.5-4-6-9-6z"/></svg>
-        </div>
-        <div>
-          <div class="ai-c" id="ac-${mid}">${md(content)}</div>
-          <div class="mactions">
-            <button class="mact" onclick="cpEl('ac-${mid}')">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>`;
+    row.innerHTML=`<div class="bub-ai"><div class="ai-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div><div><div class="ai-c" id="ac-${mid}">${md(content)}</div><div class="mactions"><button class="mact" onclick="cpEl('ac-${mid}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div></div>`;
   }
   msgs.appendChild(row);
   if(animate)scrollC();
-  return row;
 }
-
+ 
 function addTyping(id){
   const msgs=document.getElementById('messages');
   const row=document.createElement('div');
-  row.className='mrow ai'; row.id=id;
-  row.innerHTML=`<div class="bub-ai"><div class="ai-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/><path d="M12 12c-5 0-9 2.5-9 6v1a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-1c0-3.5-4-6-9-6z"/></svg></div><div class="typing"><span></span><span></span><span></span></div></div>`;
-  msgs.appendChild(row);
+  row.className='mrow ai';row.id=id;
+  row.innerHTML=`<div class="bub-ai"><div class="ai-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div><div class="typing"><span></span><span></span><span></span></div></div>`;
+  msgs.appendChild(row);scrollC();
 }
 function rmTyping(id){document.getElementById(id)?.remove();}
 function scrollC(){const w=document.getElementById('chat-wrap');requestAnimationFrame(()=>{w.scrollTop=w.scrollHeight;});}
-
+ 
 function inKey(e){
   document.getElementById('send-btn').disabled=!e.target.value.trim();
   if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();if(!document.getElementById('send-btn').disabled)send();}
 }
-function autoR(el){
-  el.style.height='auto';
-  el.style.height=Math.min(el.scrollHeight,180)+'px';
-  document.getElementById('send-btn').disabled=!el.value.trim();
-}
+function autoR(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,180)+'px';document.getElementById('send-btn').disabled=!el.value.trim();}
 function suggest(t){const i=document.getElementById('chat-in');i.value=t;autoR(i);i.focus();}
-
-/* ════ MODEL PICKER ════ */
+ 
+/* ════ MODEL ════ */
 function toggleMDrop(){document.getElementById('mdrop').classList.toggle('open');}
 function pickModel(id,lbl,needsPrem,e){
   e?.stopPropagation();
   document.getElementById('mdrop').classList.remove('open');
-  if(needsPrem&&!premium){openUpgrade();toast('This model requires Premium','e');return;}
+  if(needsPrem&&!isPremium()){openUpgrade();toast('This model requires Premium','e');return;}
   model=id;
   document.getElementById('mlabel').textContent=lbl;
   document.getElementById('meta-m').textContent=lbl;
@@ -1271,15 +915,14 @@ function pickModel(id,lbl,needsPrem,e){
   toast(`Model: ${lbl}`,'s');
 }
 document.addEventListener('click',e=>{if(!e.target.closest('#mpill'))document.getElementById('mdrop').classList.remove('open');});
-
+ 
 /* ════ SIDEBAR ════ */
 function toggleSB(){
   sbOpen=!sbOpen;
-  const sb=document.getElementById('sb');
-  sb.classList.toggle('collapsed',!sbOpen);
-  if(window.innerWidth<=620)sb.classList.toggle('mob-open',sbOpen);
+  document.getElementById('sb').classList.toggle('collapsed',!sbOpen);
+  if(window.innerWidth<=620)document.getElementById('sb').classList.toggle('mob-open',sbOpen);
 }
-
+ 
 /* ════ SETTINGS ════ */
 function openSettings(tab='api'){
   updUI();
@@ -1294,7 +937,6 @@ function switchTab(n){
   document.querySelectorAll('.stab').forEach(t=>t.classList.toggle('active',t.dataset.t===n));
   document.querySelectorAll('.spanel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+n));
 }
-
 function saveKey(){
   const k=document.getElementById('oai-key').value.trim();
   const o=document.getElementById('oai-org').value.trim();
@@ -1303,44 +945,36 @@ function saveKey(){
   localStorage.setItem('aria_org',o);
   chkBanner();
   const si=document.getElementById('key-saved');
-  si.classList.add('show'); setTimeout(()=>si.classList.remove('show'),2500);
+  si.classList.add('show');setTimeout(()=>si.classList.remove('show'),2500);
   toast('API key saved!','s');
 }
-
 async function testKey(){
-  const k=document.getElementById('oai-key').value.trim()||localStorage.getItem('aria_key');
-  if(!k){toast('Enter an API key first','e');return;}
+  const k=localStorage.getItem('aria_key')||document.getElementById('oai-key').value.trim()||OPENAI_KEY;
+  if(!k){toast('No API key found','e');return;}
   const btn=document.getElementById('test-btn');
-  btn.textContent='Testing…'; btn.disabled=true;
+  btn.textContent='Testing…';btn.disabled=true;
   try{
     const r=await fetch('https://api.openai.com/v1/models',{headers:{'Authorization':`Bearer ${k}`}});
     if(r.ok){toast('✓ API key is valid!','s');}
     else{const err=await r.json();toast(err.error?.message||'Invalid key','e');}
   }catch{toast('Connection failed','e');}
-  btn.textContent='Test connection'; btn.disabled=false;
+  btn.textContent='Test connection';btn.disabled=false;
 }
-
 function toggleEye(){
   const i=document.getElementById('oai-key');
   const ic=document.getElementById('eye-ic');
-  if(i.type==='password'){
-    i.type='text';
-    ic.innerHTML='<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>';
-  }else{
-    i.type='password';
-    ic.innerHTML='<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
-  }
+  if(i.type==='password'){i.type='text';ic.innerHTML='<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>';}
+  else{i.type='password';ic.innerHTML='<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';}
 }
-
 function saveAccount(){
-  const nm=document.getElementById('s-name').value.trim(); if(!nm)return;
-  if(user){
-    user._dn=nm;
-    try{const {db,doc,setDoc}=window.$fb;setDoc(doc(db,'users',user.uid),{displayName:nm},{merge:true});}catch{}
+  const nm=document.getElementById('s-name').value.trim();if(!nm)return;
+  const u=getUser();
+  if(u){
+    u._dn=nm;
+    try{const {doc,setDoc}=window.$fbFn;setDoc(doc(window.$db,'users',u.uid),{displayName:nm},{merge:true});}catch{}
   }
-  updUI(); toast('Account updated!','s');
+  updUI();toast('Account updated!','s');
 }
-
 function saveAI(){
   cfg.temp=parseFloat(document.getElementById('s-temp').value);
   cfg.tok=parseInt(document.getElementById('s-tok').value);
@@ -1351,7 +985,7 @@ function saveAI(){
   pickModel(mv,lm[mv]||mv,['o1','o1-mini','gpt-4-turbo'].includes(mv),null);
   toast('AI config saved!','s');
 }
-
+ 
 /* ════ UPGRADE / STRIPE ════ */
 function openUpgrade(){document.getElementById('up-ov').classList.add('open');}
 function closeUp(e){
@@ -1359,7 +993,6 @@ function closeUp(e){
   document.getElementById('up-ov').classList.remove('open');
   document.getElementById('stripe-wrap').classList.remove('show');
 }
-
 function pickPlan(p){
   plan=p;
   document.getElementById('pc-mo').classList.toggle('active',p==='monthly');
@@ -1367,64 +1000,48 @@ function pickPlan(p){
   const pr=p==='yearly'?'$8/mo':'$12/mo';
   document.getElementById('up-cta').innerHTML=`<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Get Premium — ${pr}`;
 }
-
 async function startCheckout(){
-  if(STRIPE_PK==='pk_test_YOUR_STRIPE_KEY'){
-    toast('Configure Stripe keys in the JS config','e');
-    document.getElementById('stripe-wrap').classList.add('show');
-    return;
-  }
   if(!stripeI){
     try{stripeI=Stripe(STRIPE_PK);}
-    catch(e){toast('Stripe not loaded','e');return;}
+    catch(e){toast('Stripe error: '+e.message,'e');return;}
   }
-  const btn=document.getElementById('up-cta');
-  btn.innerHTML='<div style="width:18px;height:18px;border:2px solid rgba(0,0,0,.2);border-top-color:#000;border-radius:50%;animation:spin .6s linear infinite"></div> Processing…';
-  btn.disabled=true;
-  try{
-    // Production: POST to your backend → get Stripe Checkout URL → window.location.href = url
-    document.getElementById('stripe-wrap').classList.add('show');
-    const els=stripeI.elements();
-    stripeC=els.create('card',{
-      style:{
-        base:{color:'#f4f4f5',fontSize:'14px',fontFamily:'DM Sans,system-ui','::placeholder':{color:'#52525b'},iconColor:'#a1a1aa'},
-        invalid:{color:'#f87171'}
-      }
-    });
-    stripeC.mount('#stripe-el');
-    stripeC.on('change',e=>{document.getElementById('stripe-errs').textContent=e.error?e.error.message:'';});
-  }catch(e){toast('Error: '+e.message,'e');}
-  btn.innerHTML=`<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Get Premium`;
-  btn.disabled=false;
+  document.getElementById('stripe-wrap').classList.add('show');
+  document.getElementById('stripe-el').innerHTML='';
+  const els=stripeI.elements();
+  stripeC=els.create('card',{
+    style:{
+      base:{color:'#f4f4f5',fontSize:'14px',fontFamily:'DM Sans,system-ui','::placeholder':{color:'#52525b'},iconColor:'#a1a1aa'},
+      invalid:{color:'#f87171'}
+    }
+  });
+  stripeC.mount('#stripe-el');
+  stripeC.on('change',e=>{document.getElementById('stripe-errs').textContent=e.error?e.error.message:'';});
 }
-
 async function confirmPay(){
-  // Production: stripeI.confirmCardPayment(clientSecret,{payment_method:{card:stripeC}})
-  toast('🎉 Welcome to Premium! (Demo)','s');
-  premium=true;
-  try{const {db,doc,setDoc}=window.$fb;await setDoc(doc(db,'users',user.uid),{premium:true},{merge:true});}catch{}
-  updUI(); closeUp();
+  // In production: use stripeI.confirmCardPayment(clientSecret,{payment_method:{card:stripeC}})
+  toast('🎉 Welcome to Premium!','s');
+  window._pm=true;
+  try{
+    const {doc,setDoc}=window.$fbFn;
+    const u=getUser();
+    if(u)await setDoc(doc(window.$db,'users',u.uid),{premium:true},{merge:true});
+  }catch{}
+  updUI();closeUp();
 }
-
-/* ════ UTILITIES ════ */
-function md(t){
-  if(!t)return'';
-  if(window.marked){marked.setOptions({breaks:true,gfm:true});return marked.parse(t);}
-  return esc(t).replace(/\n/g,'<br>');
-}
-function esc(s){
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
-function cp(btn,txt){navigator.clipboard.writeText(txt).then(()=>toast('Copied!','s'));}
+ 
+/* ════ UTILS ════ */
+function md(t){if(!t)return'';if(window.marked){marked.setOptions({breaks:true,gfm:true});return marked.parse(t);}return esc(t).replace(/\n/g,'<br>');}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function cp(txt){navigator.clipboard.writeText(txt).then(()=>toast('Copied!','s'));}
 function cpEl(id){const el=document.getElementById(id);if(!el)return;navigator.clipboard.writeText(el.innerText).then(()=>toast('Copied!','s'));}
 function sp(e){e.stopPropagation();}
-
+ 
 let tt;
 function toast(msg,type='s'){
   const el=document.getElementById('toast');
-  const m=document.getElementById('toast-m');
-  el.className='show '+type; m.textContent=msg;
-  clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('show'),2800);
+  el.className='show '+type;
+  document.getElementById('toast-m').textContent=msg;
+  clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('show'),2800);
 }
 </script>
 </body>
